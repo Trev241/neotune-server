@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -28,20 +30,23 @@ class SongRepository:
         Raises:
             AlreadyExistsException: If song with same email already exists
         """
-        # Check if song exists
-        existing_song = await self.get_by_email(song_data.email)
-        if existing_song:
-            raise AlreadyExistsException("Email already registered")
 
         # Create song
         song = Song(
-            email=song_data.email, hashed_password=get_password_hash(song_data.password)
+            title=song_data.title,
+            release=song_data.release,
+            year=song_data.year,
+            duration=song_data.duration,
+            thumbnail_url=song_data.thumbnail_url,
+            artist_id=song_data.artist_id,
+            id=song_data.id,
         )
+
         self.session.add(song)
         await self.session.commit()
         await self.session.refresh(song)
 
-        logger.info(f"Created song: {song.email}")
+        logger.info(f"Created song: {song.title}")
         return song
 
     async def get_by_id(self, song_id: str) -> Song:
@@ -65,15 +70,16 @@ class SongRepository:
 
         return song
 
-    async def get_by_email(self, email: str) -> Song | None:
-        """Get song by email.
+    async def get_all(self, skip: int = 0, limit: int = 100) -> List[Song]:
+        """Get all songs with pagination.
 
         Args:
-            email: Song email
+            skip: Number of songs to skip
+            limit: Maximum number of songs to return
 
         Returns:
-            Optional[Song]: Found song or None if not found
+            List[Song]: List of songs
         """
-        query = select(Song).where(Song.email == email)
+        query = select(Song).offset(skip).limit(limit)
         result = await self.session.execute(query)
-        return result.scalar_one_or_none()
+        return result.scalars().all()
