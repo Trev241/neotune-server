@@ -40,6 +40,7 @@ class SongRepository:
             thumbnail_url=song_data.thumbnail_url,
             artist_id=song_data.artist_id,
             id=song_data.id,
+            song_code=song_data.song_code,
         )
 
         self.session.add(song)
