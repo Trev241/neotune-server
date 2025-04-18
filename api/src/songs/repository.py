@@ -103,3 +103,22 @@ class SongRepository:
             raise NotFoundException("Song not found")
 
         return song
+
+    async def get_by_title(
+        self, title: str, skip: int = 0, limit: int = 100
+    ) -> List[Song]:
+        """Get song by similar title
+
+        Args:
+            title: Query
+
+        Returns:
+            List[Song]: Found songs
+        """
+
+        query = (
+            select(Song).where(Song.title.ilike(f"%{title}%")).offset(skip).limit(limit)
+        )
+
+        result = await self.session.execute(query)
+        return result.scalars().all()

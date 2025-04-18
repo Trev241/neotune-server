@@ -61,3 +61,6 @@ class SongService:
             similar_songs.append(similar_song)
 
         return similar_songs
+
+    async def search_songs(self, query: str, skip: int, limit: int) -> List[Song]:
+        return await self.repository.get_by_title(query, skip, limit)

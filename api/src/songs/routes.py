@@ -47,3 +47,15 @@ async def recommend_songs(
     """Recommend a song"""
     logger.debug(f"Requesting songs similar to song: {song_id}")
     return await SongService(session).recommend_songs(song_id, top_k)
+
+
+@router.get("/search", status_code=status.HTTP_200_OK)
+async def search(
+    query: str,
+    skip: int = 0,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_session),
+):
+    """Search for a song"""
+    logger.debug(f"Searching f{query}")
+    return await SongService(session).search_songs(query, skip, limit)
