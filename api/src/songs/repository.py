@@ -84,3 +84,22 @@ class SongRepository:
         query = select(Song).offset(skip).limit(limit)
         result = await self.session.execute(query)
         return result.scalars().all()
+
+    async def get_by_song_code(self, song_code: int) -> Song:
+        """Get song by song_code
+
+        Args:
+            song_code: Song code
+
+        Returns:
+            Song: Found song
+        """
+
+        query = select(Song).where(Song.song_code == song_code)
+        result = await self.session.execute(query)
+        song = result.scalar_one_or_none()
+
+        if not song:
+            raise NotFoundException("Song not found")
+
+        return song

@@ -1,8 +1,10 @@
 import os
-import yt_dlp
 import json
-
 from pathlib import Path
+
+import yt_dlp
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 class AudioDownloader:
@@ -47,3 +49,22 @@ class AudioDownloader:
             json.dump(details, f, indent=2)
 
         return details
+
+
+class Recommender:
+    def __init__(self, embeddings_path="song_embeddings.npy"):
+        self.embeddings = np.load(embeddings_path)
+
+    def find_similar_songs(self, song_code, top_k=5):
+        song_embedding = self.embeddings[song_code].reshape(1, -1)
+
+        # Compute cosine similarity between the input song and all songs
+        similarities = cosine_similarity(song_embedding, self.embeddings).flatten()
+
+        top_indices = np.argsort(similarities)[::-1][: top_k + 1]
+        top_scores = similarities[top_indices]
+        # Exclude the input song
+        top_indices = top_indices[top_indices != song_code][:top_k]
+        top_scores = top_scores[: len(top_indices)]
+
+        return top_indices, top_scores

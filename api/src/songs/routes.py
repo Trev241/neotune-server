@@ -38,3 +38,12 @@ async def stream_song(song_id: str, session: AsyncSession = Depends(get_session)
     """Stream a song"""
     details = await SongService(session).get_stream(song_id)
     return StreamingResponse(details["stream"], media_type=f"audio/{details['ext']}")
+
+
+@router.get("/recommend", status_code=status.HTTP_200_OK)
+async def recommend_songs(
+    song_id: str, top_k: int = 5, session: AsyncSession = Depends(get_session)
+):
+    """Recommend a song"""
+    logger.debug(f"Requesting songs similar to song: {song_id}")
+    return await SongService(session).recommend_songs(song_id, top_k)
