@@ -162,3 +162,5 @@ cython_debug/
 # Project specific
 sql/
 output/
+legacy/track_metadata.db
+legacy/songs.csv

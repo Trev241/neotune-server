@@ -8,7 +8,7 @@ class SongBase(BaseModel):
     song_code: int
     release: str
     year: int
-    duration: int
+    duration: float
     thumbnail_url: str
     artist_id: str
 
