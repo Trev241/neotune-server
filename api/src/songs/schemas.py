@@ -5,6 +5,7 @@ class SongBase(BaseModel):
     """Base song schema."""
 
     title: str
+    song_code: int
     release: str
     year: int
     duration: int
