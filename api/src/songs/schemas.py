@@ -9,7 +9,7 @@ class SongBase(BaseModel):
     release: str
     year: int
     duration: float
-    thumbnail_url: str
+    thumbnail_url: str | None
     artist_id: str
 
 

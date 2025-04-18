@@ -14,5 +14,5 @@ class Song(Base):
     release = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
     duration = Column(Float, nullable=False)
-    thumbnail_url = Column(String)
+    thumbnail_url: None = Column(String, nullable=True)
     artist_id = Column(String)
