@@ -9,6 +9,7 @@ class Song(Base):
     __tablename__ = "songs"
 
     id = Column(String, primary_key=True, index=True)
+    song_code = Column(Integer, nullable=False)
     title = Column(String, unique=True, index=True, nullable=False)
     release = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
