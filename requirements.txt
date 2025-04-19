@@ -10,3 +10,4 @@ asyncpg
 python-multipart
 alembic
 uvicorn
+numpy
