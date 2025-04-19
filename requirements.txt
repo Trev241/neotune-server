@@ -9,3 +9,4 @@ yt_dlp
 asyncpg
 python-multipart
 alembic
+uvicorn

@@ -18,7 +18,7 @@ class AudioDownloader:
         )
 
     def download(self, song_id, q, artist):
-        info = self.yt.extract_info(f"ytsearch1:{q} by {artist}", download=True)
+        info = self.yt.extract_info(f"ytsearch1:{q} - {artist}", download=True)
 
         with open("output/dump.json", "w") as f:
             processed_info = self.yt.sanitize_info(info)
