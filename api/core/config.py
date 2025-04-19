@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Neotune API"
     DATABASE_URL: str
     DEBUG: bool = False
+    PORT: int = 5000
 
     # JWT Settings
     JWT_SECRET: str  # Change in production

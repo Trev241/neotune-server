@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 from api.core.config import settings
 from api.core.logging import get_logger, setup_logging
@@ -49,3 +50,7 @@ async def root():
     """Root endpoint."""
     logger.debug("Root endpoint called")
     return {"message": "Welcome to Neotune API!"}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, port=settings.PORT)
