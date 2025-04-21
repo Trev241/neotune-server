@@ -14,6 +14,7 @@ class AudioDownloader:
                 "noplaylist": True,
                 "outtmpl": "output/%(title)s.%(ext)s",
                 "format": "bestaudio",
+                "cookiefile": "cookies.txt",
             }
         )
 

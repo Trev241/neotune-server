@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.core.database import get_session
 from api.core.logging import get_logger
-from api.src.songs.schemas import SongCreate, SongResponse
+from api.src.songs.schemas import SongCreate, SongResponse, CookiesCreate
 from api.src.songs.service import SongService
 from api.src.songs.models import Song
 
@@ -59,3 +59,11 @@ async def search(
     """Search for a song"""
     logger.debug(f"Searching f{query}")
     return await SongService(session).search_songs(query, skip, limit)
+
+
+@router.post("/cookies", status_code=status.HTTP_200_OK)
+async def update_cookies(
+    cookies_data: CookiesCreate, session: AsyncSession = Depends(get_session)
+):
+    SongService(session).update_cookies(cookies_data.content)
+    return {"detail": "Cookies updated."}

@@ -28,6 +28,11 @@ class SongService:
         self.audio_downloader = AudioDownloader()
         self.recommender = Recommender()
 
+    def update_cookies(self, content: str):
+        with open("cookies.txt", "w") as fp:
+            fp.write(content)
+        self.audio_downloader = AudioDownloader()
+
     async def create_song(self, song_data: SongCreate) -> Song:
         """Create a new song."""
         return await self.repository.create(song_data)

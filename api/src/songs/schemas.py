@@ -24,3 +24,9 @@ class SongResponse(SongBase):
 
     model_config = ConfigDict(from_attributes=True)
     id: str
+
+
+class CookiesCreate(BaseModel):
+    """Cookies creations schema"""
+
+    content: str
